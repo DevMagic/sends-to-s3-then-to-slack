@@ -1,0 +1,16 @@
+{
+  "name": "sends-to-s3-then-to-slack",
+  "version": "1.0.0",
+  "description": "It sends a file to s3 and then the generated link to slack",
+  "main": "index.js",
+  "bin" : {
+    "sends-to-s3-then-to-slack" : "./index.js"
+  },
+  "dependencies": {
+    "@slack/client": "^4.8.0",
+    "aws-sdk": "^2.334.0"
+  },
+  "devDependencies": {},
+  "author": "Danillo Santos",
+  "license": "ISC"
+}
