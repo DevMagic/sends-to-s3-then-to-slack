@@ -1,10 +1,14 @@
 {
-  "name": "sends-to-s3-then-to-slack",
+  "name": "@danillosantos/sends-to-s3-then-to-slack",
   "version": "1.0.0",
   "description": "It sends a file to s3 and then the generated link to slack",
   "main": "index.js",
   "bin" : {
     "sends-to-s3-then-to-slack" : "./index.js"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/DevMagic/sends-to-s3-then-to-slack"
   },
   "dependencies": {
     "@slack/client": "^4.8.0",
