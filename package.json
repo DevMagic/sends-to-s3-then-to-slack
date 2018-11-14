@@ -1,6 +1,6 @@
 {
   "name": "@danillosantos/sends-to-s3-then-to-slack",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "It sends a file to s3 and then the generated link to slack",
   "main": "index.js",
   "bin" : {
