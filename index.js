@@ -18,15 +18,16 @@ async function start() {
 }
 
 async function uploadFileToS3() {
+
 	let fileName = `${process.env.BITBUCKET_REPO_SLUG}-${process.env.BITBUCKET_BRANCH}-${process.env.BITBUCKET_BUILD_NUMBER}.apk`;
 		s3 = new S3({
 			accessKeyId : process.env.AWS_ACCESS_KEY,
 			secretAccessKey : process.env.AWS_SECRET_KEY
-		})
+		});
 
 	await s3.putObject({
 		ACL : 'public-read',
-		Body : fs.createReadStream(process.env.APK_PATH),
+		Body : fs.createReadStream(process.env.FILE_PATH),
 		Bucket : process.env.BUCKET_NAME,
 		Key : fileName
 	}).promise();
@@ -35,9 +36,11 @@ async function uploadFileToS3() {
 
 async function sendMessageToSlack(fileUrl) {
 	const web = new WebClient(process.env.SLACK_TOKEN);
-	await web.chat.postMessage({ channel: process.env.SLACK_CHANNEL, text: `
-		:iphone: ${process.env.BITBUCKET_REPO_SLUG}-${process.env.BITBUCKET_BRANCH}-${process.env.BITBUCKET_BUILD_NUMBER} APK: ${fileUrl}
-	`, as_user : true });
+	process.env.SLACK_CHANNEL && Promise.all(process.env.SLACK_CHANNEL.split(',').map(async (channel) => {
+		await web.chat.postMessage({ channel: channel.trim(), text: `
+			:iphone: ${process.env.BITBUCKET_REPO_SLUG}-${process.env.BITBUCKET_BRANCH}-${process.env.BITBUCKET_BUILD_NUMBER} APK: ${fileUrl}
+		`, as_user : true });	
+	}));
 }
 
 
